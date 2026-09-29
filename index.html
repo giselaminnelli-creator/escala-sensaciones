@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Escala de Sensaciones Corporales</title>
+  <style>
+    :root {
+      --bg-main: #FAF9F6;
+      --card-bg: #FFFFFF;
+      --text-main: #2D3748;
+      --text-muted: #718096;
+    }
+
+    * {
+      box-sizing: border-box;
+      outline: none;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      padding: 30px 15px;
+      margin: 0;
+    }
+
+    .container {
+      background: var(--card-bg);
+      max-width: 620px;
+      width: 100%;
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+    }
+
+    h2 {
+      color: #1A365D;
+      margin: 0 0 6px 0;
+      text-align: center;
+      font-size: 1.35rem;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 22px;
+      line-height: 1.4;
+      font-weight: 500;
+    }
+
+    /* Escalera de 5 botones con etiqueta inferior */
+    .scale-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+
+    .num-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .num-btn {
+      width: 100%;
+      aspect-ratio: 1;
+      border: none;
+      border-radius: 14px;
+      font-size: 1.3rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    }
+
+    .num-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+    }
+
+    .num-btn.active {
+      transform: scale(1.08);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+    }
+
+    .btn-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-align: center;
+      color: var(--text-muted);
+      line-height: 1.2;
+    }
+
+    /* Colores pastel */
+    .btn-1 { background: #FCE8E6; color: #9B2C2C; }
+    .btn-2 { background: #E6F4EA; color: #22543D; }
+    .btn-3 { background: #EDF2F7; color: #4A5568; }
+    .btn-4 { background: #EBF8FF; color: #2B6CB0; }
+    .btn-5 { background: #FFFAF0; color: #C05621; }
+
+    /* Card informativa */
+    .detail-card {
+      display: none;
+      background: #F8FAFC;
+      border-radius: 16px;
+      padding: 20px;
+      animation: fadeIn 0.2s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .detail-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .detail-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 0;
+      color: #1A365D;
+    }
+
+    .tag-zone {
+      padding: 5px 12px;
+      border-radius: 16px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .block {
+      margin-bottom: 12px;
+      font-size: 0.88rem;
+      line-height: 1.45;
+    }
+
+    .block:last-child {
+      margin-bottom: 0;
+    }
+
+    .block-title {
+      font-weight: 700;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      margin-bottom: 3px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>¿Cómo escucha tu cuerpo a la comida?</h2>
+  <p class="subtitle">Aprender a reconocer tus propias señales</p>
+
+  <!-- Botones del 1 al 5 con texto visible debajo -->
+  <div class="scale-grid">
+    <div class="num-card">
+      <button type="button" class="num-btn btn-1" onclick="showDetail(1)">1</button>
+      <span class="btn-label">Hambre muy intensa</span>
+    </div>
+    <div class="num-card">
+      <button type="button" class="num-btn btn-2" onclick="showDetail(2)">2</button>
+      <span class="btn-label">Hambre presente</span>
+    </div>
+    <div class="num-card">
+      <button type="button" class="num-btn btn-3" onclick="showDetail(3)">3</button>
+      <span class="btn-label">Punto neutro</span>
+    </div>
+    <div class="num-card">
+      <button type="button" class="num-btn btn-4" onclick="showDetail(4)">4</button>
+      <span class="btn-label">Satisfacción</span>
+    </div>
+    <div class="num-card">
+      <button type="button" class="num-btn btn-5" onclick="showDetail(5)">5</button>
+      <span class="btn-label">Plenitud elevada</span>
+    </div>
+  </div>
+
+  <!-- Panel informativo limpio para el paciente -->
+  <div id="detailCard" class="detail-card">
+    <div class="detail-header">
+      <h3 id="detTitle" class="detail-title"></h3>
+      <span id="detTag" class="tag-zone"></span>
+    </div>
+    
+    <div class="block">
+      <div class="block-title">💬 Mensaje interno</div>
+      <div id="detMessage" style="font-style: italic; font-weight: 600; color: #2C5282;"></div>
+    </div>
+
+    <div class="block">
+      <div class="block-title">🧘 Sensaciones posibles</div>
+      <div id="detBody"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const scaleData = {
+    1: {
+      title: "1. Hambre Muy Intensa",
+      zone: "URGENCIA",
+      bg: "#FCE8E6", color: "#9B2C2C",
+      message: "«Mi cuerpo me está pidiendo comida con mucha fuerza.»",
+      body: "Sensación de vacío profundo, rugidos de estómago, debilidad, irritabilidad, dificultad para concentrarte o urgencia por comer."
+    },
+    2: {
+      title: "2. Hambre Presente",
+      zone: "RECEPTIVO",
+      bg: "#E6F4EA", color: "#22543D",
+      message: "«Sé que tengo hambre y tengo ganas de comer.»",
+      body: "Sensación suave de vacío, apetito claro, interés por la comida o señales corporales tranquilas."
+    },
+    3: {
+      title: "3. Punto Neutro",
+      zone: "NEUTRO",
+      bg: "#EDF2F7", color: "#4A5568",
+      message: "«No siento hambre ni sensación de estar lleno/a.»",
+      body: "Ausencia de señales activas de hambre o plenitud en la zona digestiva. Comer aquí puede responder a horarios, contexto social, antojos o placer."
+    },
+    4: {
+      title: "4. Satisfacción",
+      zone: "SATISFACCIÓN",
+      bg: "#EBF8FF", color: "#2B6CB0",
+      message: "«Ya no tengo hambre y me siento cómodamente satisfecho/a.»",
+      body: "Sensación de comodidad digestiva, calma, energía restaurada y pérdida progresiva del interés por la comida."
+    },
+    5: {
+      title: "5. Plenitud Elevada",
+      zone: "PLENITUD ELEVADA",
+      bg: "#FFFAF0", color: "#C05621",
+      message: "«Estoy demasiado lleno/a y aparece malestar.»",
+      body: "Pesadez gástrica, distensión abdominal, sensación de haber comido de más, somnolencia o incomodidad al moverte."
+    }
+  };
+
+  function showDetail(num) {
+    const buttons = document.querySelectorAll('.num-btn');
+    buttons.forEach(btn => btn.classList.remove('active'));
+
+    const selectedBtn = document.querySelector('.num-card:nth-child(' + num + ') .num-btn');
+    if (selectedBtn) {
+      selectedBtn.classList.add('active');
+    }
+
+    const item = scaleData[num];
+    if (!item) return;
+
+    const card = document.getElementById('detailCard');
+    
+    document.getElementById('detTitle').innerText = item.title;
+    
+    const tag = document.getElementById('detTag');
+    tag.innerText = item.zone;
+    tag.style.backgroundColor = item.bg;
+    tag.style.color = item.color;
+
+    document.getElementById('detMessage').innerText = item.message;
+    document.getElementById('detBody').innerText = item.body;
+
+    card.style.display = 'block';
+  }
+</script>
+
+</body>
+</html>
