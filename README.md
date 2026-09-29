@@ -1,0 +1,2 @@
+# escala-sensaciones
+escala-sensaciones
